@@ -17,8 +17,7 @@ begin
   for var i := 1 to size do
     arr[i] := random(-9, 9);
     
-  for var i := 1 to size do
-    write(arr[i], ' ');
+  **----------------
     
   writeln();
   
