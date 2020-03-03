@@ -13,22 +13,23 @@ begin
   readln(N);
   readln(numberBeforePrevious);
   readln(previousNumber);
-  count := 3;
+  count := 2;
+  
   for var i := 3 to N do
   begin
     readln(number);
-    if not ((number > numberBeforePrevious) and (number > previousNumber) or (number < numberBeforePrevious) and (number < previousNumber)) and (expression) then
+    if not ((previousNumber > numberBeforePrevious) and (previousNumber > number) or (previousNumber < numberBeforePrevious) and (previousNumber < number)) and (expression) then
     begin
       expression := false;
       badIndex := count;
     end;
     count += 1;
    numberBeforePrevious := previousNumber;
-   previousNumber := number;
-      
+   previousNumber := number;      
   end;
+  
   if expression then
-    writeln('0')
+    writeln('Answer: 0')
   else
-    writeln(badIndex)
+    writeln('Answer: ', badIndex)
 end.
