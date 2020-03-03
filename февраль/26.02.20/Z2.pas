@@ -24,8 +24,8 @@ begin
       badIndex := count;
     end;
     count += 1;
-   numberBeforePrevious := previousNumber;
-   previousNumber := number;      
+    numberBeforePrevious := previousNumber;
+    previousNumber := number;      
   end;
   
   if expression then
