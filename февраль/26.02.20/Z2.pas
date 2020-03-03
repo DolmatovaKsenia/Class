@@ -13,11 +13,11 @@ begin
   readln(N);
   readln(numberBeforePrevious);
   readln(previousNumber);
-  count := 3;
+  count := 2;
   for var i := 3 to N do
   begin
     readln(number);
-    if not ((number > numberBeforePrevious) and (number > previousNumber) or (number < numberBeforePrevious) and (number < previousNumber)) and (expression) then
+    if not ((previousNumber > numberBeforePrevious) and (number < previousNumber) or (previousNumber < numberBeforePrevious) and (number > previousNumber)) then
     begin
       expression := false;
       badIndex := count;
