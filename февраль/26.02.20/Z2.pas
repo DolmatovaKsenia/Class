@@ -14,21 +14,22 @@ begin
   readln(numberBeforePrevious);
   readln(previousNumber);
   count := 2;
+  
   for var i := 3 to N do
   begin
     readln(number);
-    if not ((previousNumber > numberBeforePrevious) and (number < previousNumber) or (previousNumber < numberBeforePrevious) and (number > previousNumber)) then
+    if not ((previousNumber > numberBeforePrevious) and (previousNumber > number) or (previousNumber < numberBeforePrevious) and (previousNumber < number)) and (expression) then
     begin
       expression := false;
       badIndex := count;
     end;
     count += 1;
-   numberBeforePrevious := previousNumber;
-   previousNumber := number;
-      
+    numberBeforePrevious := previousNumber;
+    previousNumber := number;      
   end;
+  
   if expression then
-    writeln('0')
+    writeln('Answer: 0')
   else
-    writeln(badIndex)
+    writeln('Answer: ', badIndex)
 end.

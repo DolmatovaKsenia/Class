@@ -8,26 +8,24 @@
 
 var
   speed, N: integer;
-  averageSpeed: real;
+  averageSpeed, sum: real;
   expression: boolean;
   
 begin
   readln(N);
   expression := false;
-  count := 0;
+  sum := 0;
   for var i := 1 to N do
   begin
     readln(speed);
-    count += 1;
     sum += speed;
-    averageSpeed := sum / count;
-    if speed > 60 then
-    begin
-      
-    end;
+    if speed >= 60 then
+      expression
   end;
-  writeln(averageSpeed);
-  
-    
-    
+ averageSpeed := sum / N;
+ writeln(averageSpeed);
+ if expression then
+   writeln('YES')
+ else
+   writeln('NO')
 end.
