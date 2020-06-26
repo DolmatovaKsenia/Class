@@ -1,9 +1,8 @@
 ﻿#include <iostream>
-#include <limits.h>
 
 using namespace std;
 
-struct Queue
+struct ListQueue
 {
 	struct Node
 	{
@@ -14,131 +13,100 @@ struct Queue
 
 		int value = 0;
 		Node* next = nullptr;
-		Node* prev = nullptr;
 	};
 
-	Node* first = nullptr;
-	Node* next = nullptr;
-	int minimum = -1;
-
+	Node* head = nullptr;
 	int count = 0;
 
-	int size()
+	void insert(int value)
 	{
-		return count;
-	}
+		++count;
 
-	void push(int value)
-	{
-		if (count == 0)
+		if (head == nullptr)
 		{
-			first = new Node(value);
-			next = first;
-			minimum = value;
+			head = new Node(value);
 		}
 		else
 		{
-			next->next = new Node(value);
-			next->next->prev = next;
-			next = next->next;
-
-			if (value < minimum)
+			if (value < head->value)
 			{
-				minimum = value;
-			}
-		}
-
-		++count;
-	}
-
-	void pop()
-	{
-		if (count != 0)
-		{
-			int lastFirstValue = first->value;
-
-			if (first->next != nullptr)
-			{
-				Node* temp = first;
-				first = first->next;
-				first->prev = nullptr;
-				delete temp;
+				auto* oldHead = head;
+				head = new Node(value);
+				head->next = oldHead;
 			}
 			else
 			{
-				delete first;
-				first = nullptr;
-			}
+				auto* current = head;
 
-			if (lastFirstValue == minimum)
-			{
-				minimum = minLinear();
-			}
+				while (current != nullptr)
+				{
+					if (value >= current->value && current->next != nullptr && value <= current->next->value)
+					{
+						auto* lastNext = current->next;
+						current->next = new Node(value);
+						current->next->next = lastNext;
+						break;
+					}
+					else if (current->next == nullptr)
+					{
+						current->next = new Node(value);
+						break;
+					}
 
+					current = current->next;
+				}
+			}
+		}
+	}
+
+	int peekFirst()
+	{
+		if (count > 0)
+		{
+			return head->value;
+		}
+
+		return -1;
+	}
+
+	int peekSecond()
+	{
+		if (count > 1)
+		{
+			return head->next->value;
+		}
+
+		return -1;
+	}
+
+	void popFirst()
+	{
+		if (count > 0)
+		{
+			auto* oldHead = head;
+			head = head->next;
+			delete head;
 			--count;
 		}
 	}
 
-	int min()
-	{
-		return minimum;
-	}
-
-	int minLinear()
-	{
-		if (count == 0)
-		{
-			cout << "The queue is empty!!!" << endl;
-			return -1;
-		}
-
-		int minimum = INT_MAX;
-
-		Node* temp = first;
-
-		while (temp != nullptr)
-		{
-			if (temp->value < minimum)
-			{
-				minimum = temp->value;
-			}
-
-			temp = temp->next;
-		}
-
-		return minimum;
-	}
 };
 
 int main()
 {
-	int command = 0;
-	Queue queue;
 
-	int numberOfCommands = 0;
+	ListQueue numbersOfPeople;
 
-	cin >> numberOfCommands;
+	int countOfProvincies = 0;
 
-	for (int i = 0; i < numberOfCommands; ++i)
+	cin >> countOfProvincies;
+
+	int numberOfPeople = 0;
+
+	for (int i = 0; i < countOfProvincies; ++i)
 	{
-		cin >> command;
-
-		if (command > 0)
-		{
-			queue.push(command);
-		}
-		else
-		{
-			if (queue.size() == 0)
-			{
-				cout << -1 << endl;
-			}
-			else
-			{
-				cout << queue.min() << endl;
-				queue.pop();
-			}
-		}
+		cin >> numberOfPeople;
+		numbersOfPeople.insert(numberOfPeople);
 	}
 
 	return 0;
