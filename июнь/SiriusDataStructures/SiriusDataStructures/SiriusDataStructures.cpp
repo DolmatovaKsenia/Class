@@ -6,17 +6,22 @@ struct ListQueue
 {
 	struct Node
 	{
+		int value = 0;
+		Node* next = nullptr;
+
 		Node(int value)
 		{
 			this->value = value;
 		}
-
-		int value = 0;
-		Node* next = nullptr;
 	};
 
 	Node* head = nullptr;
 	int count = 0;
+
+	int size()
+	{
+		return count;
+	}
 
 	void insert(int value)
 	{
@@ -89,13 +94,12 @@ struct ListQueue
 			--count;
 		}
 	}
-
 };
 
 int main()
 {
 
-	ListQueue numbersOfPeople;
+	ListQueue numberOfPeopleInEveryCountry;
 
 	int countOfProvincies = 0;
 
@@ -106,8 +110,21 @@ int main()
 	for (int i = 0; i < countOfProvincies; ++i)
 	{
 		cin >> numberOfPeople;
-		numbersOfPeople.insert(numberOfPeople);
+		numberOfPeopleInEveryCountry.insert(numberOfPeople);
 	}
+
+	int numberOfNewPassports = 0;
+
+	while (numberOfPeopleInEveryCountry.size() != 1)
+	{
+		int countPeopleInNewCountry = numberOfPeopleInEveryCountry.peekFirst() + numberOfPeopleInEveryCountry.peekSecond();
+		numberOfNewPassports += countPeopleInNewCountry;
+		numberOfPeopleInEveryCountry.popFirst();
+		numberOfPeopleInEveryCountry.popFirst();
+		numberOfPeopleInEveryCountry.insert(countPeopleInNewCountry);
+	}
+
+	cout << numberOfNewPassports << endl;
 
 	return 0;
 }
