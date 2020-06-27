@@ -90,7 +90,7 @@ struct ListQueue
 		{
 			auto* oldHead = head;
 			head = head->next;
-			delete head;
+			delete oldHead;
 			--count;
 		}
 	}
