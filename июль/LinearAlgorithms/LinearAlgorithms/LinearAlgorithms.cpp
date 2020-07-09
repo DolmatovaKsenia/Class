@@ -125,6 +125,33 @@ void bankRobbery()
 	} 
 	else
 	{
-		// нахождение первого и второго максимума (и индексов)
+		if (step == 1)
+		{
+			int max1 = -1;
+			int max2 = -1;
+			int arr[100000];
+			int max1Pos = 0;
+			int max2Pos = 0;
+			for (int i = 1; i <= numberOfCells; ++i)
+			{
+				cin >> arr[i];
+				if (arr[i] > max1)
+				{
+					max1 = arr[i];
+					max1Pos = i;
+				}
+			}
+			for (int i = 1; i <= numberOfCells; ++i)
+			{
+				if (arr[i] > max2 && arr[i] < max1)
+				{
+					max2 = arr[i];
+					max2Pos = i;
+				}
+			}
+
+			cout << max2Pos << " " << max1Pos << endl;
+		}
+		
 	}
 }
