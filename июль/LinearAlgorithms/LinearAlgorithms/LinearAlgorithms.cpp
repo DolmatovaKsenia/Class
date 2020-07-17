@@ -1,6 +1,7 @@
 ﻿#include <iostream>
 #include <cmath>
 #include <climits>
+#include <vector>
 
 using namespace std;
 
@@ -8,9 +9,13 @@ void relation();
 
 void bankRobbery();
 
+void greatBattle();
+
+void barChart();
+
 int main()
 {
-	bankRobbery();
+	barChart();
 
 	return 0;
 }
@@ -123,35 +128,127 @@ void bankRobbery()
 
 		delete[] dist;
 	} 
-	else
+	else // Решить задачу без использования массива большой длины.
 	{
-		if (step == 1)
+		int max1 = -1;
+		int max2 = -1;
+		int arr[100000];
+		int max1Pos = 0;
+		int max2Pos = 0;
+		for (int i = 1; i <= numberOfCells; ++i)
 		{
-			int max1 = -1;
-			int max2 = -1;
-			int arr[100000];
-			int max1Pos = 0;
-			int max2Pos = 0;
-			for (int i = 1; i <= numberOfCells; ++i)
+			cin >> arr[i];
+			if (arr[i] > max1)
 			{
-				cin >> arr[i];
-				if (arr[i] > max1)
-				{
-					max1 = arr[i];
-					max1Pos = i;
-				}
+				max1 = arr[i];
+				max1Pos = i;
 			}
-			for (int i = 1; i <= numberOfCells; ++i)
-			{
-				if (arr[i] > max2 && arr[i] < max1)
-				{
-					max2 = arr[i];
-					max2Pos = i;
-				}
-			}
-
-			cout << max2Pos << " " << max1Pos << endl;
 		}
-		
+		for (int i = 1; i <= numberOfCells; ++i)
+		{
+			if (arr[i] > max2 && arr[i] < max1)
+			{
+				max2 = arr[i];
+				max2Pos = i;
+			}
+		}
+
+		cout << max2Pos << " " << max1Pos << endl;
 	}
+}
+
+void greatBattle()
+{
+	int INF = 2e9 + 1;
+	int n; 
+	cin >> n;
+	vector<int> a(n + 2, -INF);
+	vector<int> ans(n + 2);
+	for (int i = 1; i <= n; ++i)
+		cin >> a[i];
+	vector<int> st;
+	st.push_back(0);
+	for (int i = 1; i < n + 2; ++i)
+	{
+		while (a[st.back()] > a[i])
+		{
+			if (i == n + 1)
+			{
+				ans[st.back()] = -1;
+			}
+			else
+			{
+				ans[st.back()] = i - 1;
+			}
+			st.pop_back();
+		}
+		st.push_back(i);
+	}
+	for (int i = 1; i <= n; ++i)
+		cout << ans[i] << " ";
+	cout << endl;
+}
+
+void barChart()
+{
+	int INF = 2e9 + 1;
+	int n; cin >> n;
+	vector<int> h(n + 2, -INF);
+	vector<int> right(n + 2);
+	vector<int> left(n + 2);
+	for (int i = 1; i <= n; ++i)
+		cin >> h[i];
+	vector<int> st;
+	st.push_back(0);
+	for (int i = 1; i < n + 2; ++i)
+	{
+		while (h[st.back()] > h[i])
+		{
+			right[st.back()] = i;
+			st.pop_back();
+		}
+		st.push_back(i);
+	}
+
+	st.clear();
+	st.push_back(n + 1);
+	for (int i = n; i > -1; --i)
+	{
+		while (h[st.back()] > h[i])
+		{
+			left[st.back()] = i;
+			st.pop_back();
+		}
+		st.push_back(i);
+	}
+
+	// Поиск прямоугольника максимальной площади.
+
+	long long int maxS = -1;
+
+	for (int i = 1; i < n + 1; ++i)
+	{
+		int currentS = h[i];
+		int width = 1;
+
+		width += i - left[i] - 1;
+
+		if (right[i] != n + 1)
+		{
+			width += right[i] - i - 1;
+		}
+		else
+		{
+			width += n - i;
+		}
+
+		currentS *= width;
+
+		if (currentS > maxS)
+		{
+			maxS = currentS;
+		}
+	}
+
+	cout << maxS << endl;
 }
